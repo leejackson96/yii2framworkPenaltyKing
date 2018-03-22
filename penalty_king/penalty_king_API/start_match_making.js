@@ -52,75 +52,72 @@ function start_match_making(req,res){
 					id:player_id,
 					access_token:access_token
 						}
-					}).then(function(player_data){
-							if(player_data)
-							{
-								m.wallet.findOne({
-									where:{
+			}).then(function(player_data){
+				if(player_data)
+				{
+					m.wallet.findOne({
+						where:{
+							player_id:player_data.id
+								}
+					}).then(function(wallet_data){
+						var new_balance = parseFloat(wallet_data.balance) -parseFloat(match_type_data.buy_in)  
+						
+						m.wallet.update(
+								{ 
+									balance: new_balance
+								},
+								{ 
+									where: {
 										player_id:player_data.id
-											}
-								}).then(function(wallet_data){
-									var new_balance = parseFloat(wallet_data.balance) -parseFloat(match_type_data.buy_in)  
-									
-									m.wallet.update(
-											{ 
-												balance: new_balance
-											},
-											{ 
-												where: {
-													player_id:player_data.id
-												}
-											});
+									}
+								});							
+						m.transaction.create({ 
+							wallet_id:wallet_data.id,
+							player_id:wallet_data.player_id,
+							type:'coin',
+							amount:match_type_data.buy_in ,
+							transaction:'out',
+							before_balance:wallet_data.balance,
+							after_balance:new_balance,
+							created_at:moment().format()
+						}).then(function(transaction_data){
+							return res.json({
+								error:{
+									status_code:0,
+									message:"started matchmaking,transaction created"
+								},
+								data:{
+									transaction_id:transaction_data.id,
+									player_id:player_data.id,
+									wallet_id:wallet_data.id
 
-										
-									m.transaction.create({ 
-										wallet_id:wallet_data.id,
-										player_id:wallet_data.player_id,
-										type:'coin',
-										amount:match_type_data.buy_in ,
-										transaction:'out',
-										before_balance:wallet_data.balance,
-										after_balance:new_balance,
-										created_at:moment().format()
-										}).then(function(transaction_data){
-											return res.json({
-												error:{
-													status_code:0,
-													message:"started matchmaking,transaction created"
-												},
-												data:{
-													transaction_id:transaction_data.id,
-													player_id:player_data.id,
-													wallet_id:wallet_data.id
+								}
+							});
 
-												}
-											});
-
-										});
-								});
-							}
-							else
-							{
-								return res.json({
-									error: {
-								 		status_code : 11,
-								 		message :"invalid access_token/player_id "
-								 		} 
-								});
-							}
 						});
-
-			}
+					});
+				}
 				else
 				{
 					return res.json({
-							error: {
-						 		status_code : 14,
-						 		message :"invalid room_type "
-						 		} 
-						});
+						error: {
+					 		status_code : 11,
+					 		message :"invalid access_token/player_id "
+					 		} 
+					});
 				}
+			});
 
+		}
+		else
+		{
+			return res.json({
+					error: {
+				 		status_code : 14,
+				 		message :"invalid room_type "
+				 		} 
+				});
+		}
 
 	});
 	

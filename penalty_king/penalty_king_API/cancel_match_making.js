@@ -89,6 +89,7 @@ function cancel_match_making(req,res){
 							before_balance:transaction_data.after_balance,
 							after_balance:transaction_data.before_balance,
 							created_at:moment().format()
+
 						}).then(function(new_transaction_data){
 							return res.json({
 								error:{
@@ -107,7 +108,6 @@ function cancel_match_making(req,res){
 				});
 			});
 		}		
-	
 		else
 		{
 			return res.json({

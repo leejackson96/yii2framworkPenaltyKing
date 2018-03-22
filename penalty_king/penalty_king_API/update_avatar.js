@@ -6,7 +6,7 @@ exports.update_avatar = update_avatar ;
 
 function update_avatar(req,res){
 
-	var name = req.body.name;
+	var player_id = req.body.player_id;
 	var avatar_id = req.body.avatar_id;
 
 
@@ -21,21 +21,21 @@ function update_avatar(req,res){
 
 	}
 
-	m.avatar.update({ 
-		name: name
+	m.player.update({ 
+		avatar_id: avatar_id
 		},
 		{
 			where:{
-				id:avatar_id
+				id:player_id
 			}
 		}).then(function()
 		{
 			return res.json({
 			 error: {
 			 	status_code : 0,
-			 	message :"successfully updated an avatar"
-			 } 
-		})
+			 	message :"successfully updated an avatar of a player"
+				 } 
+			});
 		})
 
 	

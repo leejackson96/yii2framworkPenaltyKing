@@ -6,7 +6,12 @@ exports.login_player = login_player ;
 
 function login_player(req,res){
 
-	if(_.isUndefined(req.body.username))
+	var username =req.body.username;
+	var password = req.body.password;
+	var ip_address=  req.body.ip_address;
+	var country = req.body.country;
+
+	if(_.isUndefined(username))
 	{
 		return res.json({
 			 error: {
@@ -16,7 +21,7 @@ function login_player(req,res){
 		});
 
 	}
-	if(_.isUndefined(req.body.password))
+	if(_.isUndefined(password))
 	{
 		return res.json({
 			 error: {
@@ -26,8 +31,27 @@ function login_player(req,res){
 		});
 
 	}
-	var username =req.body.username;
-	var password = req.body.password;
+	if(_.isUndefined(ip_address))
+	{
+		return res.json({
+			 error: {
+			 	status_code : 10,
+			 	message :"ip_address cannot be blank"
+			 } 
+		});
+
+	}
+		if(_.isUndefined(country))
+	{
+		return res.json({
+			 error: {
+			 	status_code : 10,
+			 	message :"country cannot be blank"
+			 } 
+		});
+
+	}
+
 	m.player.findOne({
 		where:{
 			username:username,
@@ -46,19 +70,17 @@ function login_player(req,res){
 					});
 
 			}
-			m.wallet.findOne({
+			var access_token = random_generate_access_token(player_data.id);
+			m.player.update({
+				access_token:access_token,
+				ip_address:ip_address,
+				country:country
+			},
+			{
 				where:{
-					player_id:player_data.id
-					}
-				}).then(function(wallet_data){
-					var access_token = random_generate_access_token(player_data.id);
-					m.player.update({
-						access_token:access_token
-					},{
-						where:{
-							id:player_data.id
-						}
-					})
+					id:player_data.id
+				}
+			})
 				  return res.json({
 				  	error:{
 				  		status_code :0,
@@ -68,16 +90,13 @@ function login_player(req,res){
 				  	data:{
 					  	 avatar_id:player_data.avatar_id,
 					  	 player_id:player_data.id,
-						 balance : wallet_data.balance,
 						 access_token:access_token
-
 				  	}
 
 
 				  });
 
 
-			});
 
 		}
 		else
@@ -92,10 +111,8 @@ function login_player(req,res){
 				  });
 
 		}
-	
 
-
-})
+	});
 }
 function random_generate_access_token(player_id){
 

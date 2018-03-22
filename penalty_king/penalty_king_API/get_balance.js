@@ -7,6 +7,7 @@ exports.get_balance = get_balance ;
 function get_balance(req,res){
 	var player_id = req.body.player_id;
 	var access_token = req.body.access_token;
+
 	if(_.isUndefined(player_id))
 	{
 		return res.json({
@@ -36,23 +37,22 @@ function get_balance(req,res){
 
 		if(player_data)
 		{
-		m.wallet.findOne({
-			where:{
-				player_id:player_data.id
-					}
-				}).then(function(wallet_data){
-
-					return res.json({
-						error:{
-							status_code:0,
-							message:"successfully retrieved balance"
-						},
-						data:{
-							type:wallet_data.type,
-							balance:wallet_data.balance
+			m.wallet.findOne({
+				where:{
+					player_id:player_data.id
 						}
-					});
-				})
+			}).then(function(wallet_data){
+				return res.json({
+					error:{
+						status_code:0,
+						message:"successfully retrieved balance"
+					},
+					data:{
+						type:wallet_data.type,
+						balance:wallet_data.balance
+					}
+				});
+			})
 		}
 		else
 		{
@@ -61,15 +61,10 @@ function get_balance(req,res){
 			 error: {
 			 	status_code : 11,
 			 	message :"invalid access_token/player_id "
-			 } 
-		})
+				 } 
+			})
 
 		}
 
-	})
-
-	
-
-	
-	
+	});
 }

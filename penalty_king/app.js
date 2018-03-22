@@ -6,13 +6,14 @@ const bodyParser = require("body-parser");
 var m = require("./models");
 var _ = require('lodash');
 var moment = require('moment');
+var show_friend= require("./penalty_king_API/show_friend");
+var add_friend = require("./penalty_king_API/add_friend");
+var delete_friend = require("./penalty_king_API/delete_friend");
+var initialize= require("./penalty_king_API/initialize");
 
 
 var create_avatar = require("./penalty_king_API/create_avatar");
 var check_access_token = require("./penalty_king_API/check_access_token");
-var create_striker = require("./penalty_king_API/create_striker");
-var create_keeper = require("./penalty_king_API/create_keeper");
-var create_match_type = require("./penalty_king_API/create_match_type");
 var create_transaction = require("./penalty_king_API/create_transaction");
 var create_in_app_purchase = require("./penalty_king_API/create_in_app_purchase");
 var create_achievement = require("./penalty_king_API/create_achievement");
@@ -75,6 +76,25 @@ server.on("listening",function(){
 io.on("connection",function(socket)
 {
   console.log("hello, its working!");
+  socket.on("show_friend",function(player_data)
+  {		
+  	var player_id=player_data.id;
+  	var player_status=player_data.status;
+  	if(player_status="in_friend_list")
+  	{
+	  	setInterval(function()
+	  	{
+	  		show_friend.show_friend(player_id,socket.id,function (message)
+	  		{
+
+				io.to(message.data.sid).emit("friend_result",message);
+	  		});
+	  	},5000);
+	  	
+  	}
+
+  		
+  })
   socket.on("listening",function(simplefunction)
   {	
   		io.emit("popout",123);
@@ -153,6 +173,9 @@ app.get('/',function(req,res){
 });
 
 
+app.post('/initialize',function(req,res,next){
+  initialize.initialize(req,res);
+});
 
 
 app.post('/',function(req,res,next){
@@ -161,8 +184,13 @@ app.post('/',function(req,res,next){
 app.post('/create_avatar',function(req,res,next){
 	create_avatar.create_avatar(req,res);
 });
-
-
+app.post('/add_friend',function(req,res,next){
+	add_friend.add_friend(req,res);
+});
+app.post('/delete_friend',function(req,res,next){
+	delete_friend.delete_friend(req,res);
+});
+ 
 app.post('/sign_up',function(req,res,next){
 	create_player.create_player(req,res);
 });
@@ -173,15 +201,8 @@ app.post('/check_access_token',function(req,res,next){
 app.post('/login',function(req,res,next){
 	login_player.login_player(req,res);
 });
-app.post('/create_striker',function(req,res,next){
-	create_striker.create_striker(req,res);
-});
-app.post('/create_keeper',function(req,res,next){
-	create_keeper.create_keeper(req,res);
-});
-app.post('/create_match_type',function(req,res,next){
-	create_match_type.create_match_type(req,res);
-});
+
+
 app.post('/create_transaction',function(req,res,next){
 	create_transaction.create_transaction(req,res);
 });
