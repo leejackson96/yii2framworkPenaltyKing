@@ -1,0 +1,18 @@
+<!-- <script src="/socket.io/socket.io.js"></script> -->
+<script src="http://192.168.0.121:8080/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://192.168.0.121:8080');
+  socket.on('popout', function (data) {
+    console.log(data);
+    alert("warning");
+    // socket.emit('my other event', { my: 'data' });
+  });
+
+  socket.on('subscribe', function (data) {
+    console.log(data);
+    alert("cincai warning");
+    // socket.emit('my other event', { my: 'data' });
+  });
+  
+
+</script>
