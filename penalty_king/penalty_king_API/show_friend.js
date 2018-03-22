@@ -6,11 +6,12 @@ exports.show_friend = show_friend ;
 var Worker =  require('worker-middleware').Worker;
 var friend_list=[];
 
- function show_friend(player_id,socket_id,callback){
+ function show_friend(req,res){
  	var w = new Worker();
+
  	friend_list=[];
- 	w.do(show_friend_list(player_id,socket_id,callback));
- 	w.do(respond_result(callback,socket_id));
+
+ 	w.do(show_friend_list(req,res));
  	w.run(function(context,err){
 		if(err)
 			return console.log(err);
@@ -19,9 +20,11 @@ var friend_list=[];
 
 }
 
-function show_friend_list(player_id,socket_id,callback)
-{ 	return function(context,next)
-	{
+function show_friend_list(req,res)
+{ 	
+	var player_id = req.body.player_id;
+	return function(context,next)
+	{	
 		if(_.isUndefined(player_id))
 		{	
 				var message={ 
@@ -86,12 +89,13 @@ function show_friend_list(player_id,socket_id,callback)
 											player_username:player_data.username,
 											player_rank:current_rank
 											}
+								
 								friend_list.push(obj);
 							})
+
 						})
 					})
 				}
-				console.log(friend_list);
 				next();				
 			}
 
@@ -99,26 +103,7 @@ function show_friend_list(player_id,socket_id,callback)
 	}
 	
 }
-function respond_result(callback,socket_id)
-{	return function(context,next)
-	{
-		var message={
-			error:{
-				status_code:0,
-				message:"successfully retrieved friend_list"
-			},
-			data:{
 
-				friend_list:friend_list,
-				sid:socket_id
-			}
-		}
-		
-		callback(message);
-		next();
-	}
-
-}
 function check_rank(exp)
 {
 	if(exp<30)

@@ -2,9 +2,9 @@ var m = require("../models");
 var _ = require('lodash');
 var moment = require('moment');
 exports = module.exports = {};
-exports.cancel_match_making = cancel_match_making ;
+exports.cancelled_game = cancelled_game ;
 
-function cancel_match_making(req,res){
+function cancelled_game(req,res){
 
 	var transaction_id = req.body.transaction_id;
 	var player_id = req.body.player_id;

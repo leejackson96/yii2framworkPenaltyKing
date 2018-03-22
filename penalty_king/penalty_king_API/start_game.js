@@ -2,9 +2,9 @@ var m = require("../models");
 var _ = require('lodash');
 var moment = require('moment');
 exports = module.exports = {};
-exports.start_match_making = start_match_making ;
+exports.start_game = start_game ;
 
-function start_match_making(req,res){
+function start_game(req,res){
 
 
 	var player_id = req.body.player_id;
