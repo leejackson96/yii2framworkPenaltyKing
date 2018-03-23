@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 var m = require("./models");
 var _ = require('lodash');
 var moment = require('moment');
-var show_friend= require("./penalty_king_API/show_friend");
+// var show_friend= require("./penalty_king_API/show_friend");
 var add_friend = require("./penalty_king_API/add_friend");
 var delete_friend = require("./penalty_king_API/delete_friend");
 var initialize= require("./penalty_king_API/initialize");
@@ -189,9 +189,9 @@ app.post('/create_avatar',function(req,res,next){
 app.post('/add_friend',function(req,res,next){
 	add_friend.add_friend(req,res);
 });
-app.post('/show_friend',function(req,res,next){
-	show_friend.show_friend(req,res);
-});
+// app.post('/show_friend',function(req,res,next){
+// 	show_friend.show_friend(req,res);
+// });
 app.post('/delete_friend',function(req,res,next){
 	delete_friend.delete_friend(req,res);
 });

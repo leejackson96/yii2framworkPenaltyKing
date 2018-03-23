@@ -6,11 +6,11 @@ exports.show_friend = show_friend ;
 var Worker =  require('worker-middleware').Worker;
 var friend_list=[];
 
- function show_friend(req.res){
+ function show_friend(req,res){
  
 
 
-
+}
 		if(_.isUndefined(player_id))
 		{	
 				return res.json({
@@ -87,7 +87,7 @@ var friend_list=[];
 
 		});
 	
-	}
+	
 
 
 function check_rank(exp)
