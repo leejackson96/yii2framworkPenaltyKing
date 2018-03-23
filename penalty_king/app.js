@@ -80,20 +80,20 @@ io.on("connection",function(socket)
   console.log("hello, its working!");
   // socket.on("show_friend",function(player_data)
   // {		
-  // 	var player_id=player_data.id;
-  // 	var player_status=player_data.status;
-  // 	if(player_status="in_friend_list")
-  // 	{
-	 //  	setInterval(function()
-	 //  	{
-	 //  		show_friend.show_friend(player_id,socket.id,function (message)
-	 //  		{
+  // 	// var player_id=player_data.id;
+  // 	// var player_status=player_data.status;
+  // 	// if(player_status="in_friend_list")
+  // 	// {
+	 //  // 	setInterval(function()
+	 //  // 	{
+	 //  // 		show_friend.show_friend(player_id,socket.id,function (message)
+	 //  // 		{
 
-		// 		io.to(message.data.sid).emit("friend_result",message);
-	 //  		});
-	 //  	},5000);
+		// 	// 	io.to(message.data.sid).emit("friend_result",message);
+	 //  // 		});
+	 //  // 	},5000);
 	  	
-  // 	}
+  // 	// }
 
   		
   // })

@@ -36,7 +36,16 @@ exports.add_friend = add_friend ;
 	}).then(function(player_data){
 		if(player_data)
 		{
+			if(player_data.id==player_id)
+			{
+				return res.json({
+							error:{
+								status_code:3,
+								message:"This is your username"
 
+							}
+						});
+			}
 			m.favorite.findOne({
 				where:{
 					player_id:player_id,
@@ -105,7 +114,8 @@ exports.add_friend = add_friend ;
 				
 			
 		}
-		else{
+		else
+		{
 			return res.json({
 				error:{
 					status_code:2,

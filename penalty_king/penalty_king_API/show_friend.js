@@ -6,37 +6,22 @@ exports.show_friend = show_friend ;
 var Worker =  require('worker-middleware').Worker;
 var friend_list=[];
 
- function show_friend(req,res){
- 	var w = new Worker();
+ function show_friend(req.res){
+ 
 
- 	friend_list=[];
 
- 	w.do(show_friend_list(req,res));
- 	w.run(function(context,err){
-		if(err)
-			return console.log(err);
 
-	});
-
-}
-
-function show_friend_list(req,res)
-{ 	
-	var player_id = req.body.player_id;
-	return function(context,next)
-	{	
 		if(_.isUndefined(player_id))
 		{	
-				var message={ 
+				return res.json({
 					error: {
-			 			status_code : 1,
-			 			message :" player_id cannot be blank"
-						},
-					data :{
-						sid:socket_id
-						} 
-					}
-					callback(message);			
+				 			status_code : 1,
+				 			message :" player_id cannot be blank"
+							}
+						}
+				})
+					
+							
 		}
 		
 		m.favorite.findAll({
@@ -91,6 +76,7 @@ function show_friend_list(req,res)
 											}
 								
 								friend_list.push(obj);
+								context.testing=friend_list;
 							})
 
 						})
@@ -100,9 +86,9 @@ function show_friend_list(req,res)
 			}
 
 		});
-	}
 	
-}
+	}
+
 
 function check_rank(exp)
 {
