@@ -7,10 +7,23 @@ var Worker =  require('worker-middleware').Worker;
 var friend_list=[];
 
  function show_friend(req,res){
- 
+ 	var w = new Worker();
+ 	var player_id= req.body.player_id;
+	w.do(push_into_array(req,res,player_id));
+	w.do(returnback(res));
+	w.run(function(context,err){
+		if(err)
+			return console.log(err);
 
-
+	});
 }
+function push_into_array(req,res,player_id)
+{		
+
+ 		var obj;
+ 		var friend_list=[];
+		return function(context,next){
+ 	
 		if(_.isUndefined(player_id))
 		{	
 				return res.json({
@@ -18,11 +31,11 @@ var friend_list=[];
 				 			status_code : 1,
 				 			message :" player_id cannot be blank"
 							}
-						}
-				})
+						})
+		}
 					
 							
-		}
+		
 		
 		m.favorite.findAll({
 			where:{
@@ -32,17 +45,14 @@ var friend_list=[];
 		}).then(function(favorite_data){
 			if(_.isUndefined(favorite_data))
 			{
-				
-				var message={ 
+
+				return res.json({
 					error: {
-			 			status_code : 19,
-			 			message :"friend does not exist in the friend list"
-						},
-					data :{
-						sid:socket_id
-						} 
-					}
-					callback(message);
+				 			status_code : 1,
+				 			message :"this player does not have friend"
+							}
+						})
+				
 			}
 			else
 			{
@@ -67,42 +77,63 @@ var friend_list=[];
 									}
 							}).then(function(player_achievement_data){
 								current_rank = check_rank(player_achievement_data.current_exp);
-									 var obj = {
+									  obj = {
 											avatar_id:player_data.avatar_id,
 											player_id:player_data.id,
 											player_status:player_data.status,
 											player_username:player_data.username,
 											player_rank:current_rank
 											}
-								
-								friend_list.push(obj);
-								context.testing=friend_list;
+									
+										friend_list.push(obj);
+										console.log(friend_list);
+										
+										
 							})
 
 						})
 					})
 				}
-				next();				
+				next();
+				// console.log(friend_list);
+
+
+					
 			}
+			
 
 		});
+	}
 	
 	
 
+}
+function returnback(res)
+{		console.log(friend_list);
+					return res.json({
+							error:{
+								status_code:0,
+								message:"successfully showed friend_list"
+							},
+							data:{
+									friend_list:friend_list
+							}
+						})	
+}
 
 function check_rank(exp)
 {
 	if(exp<30)
 	{
-		return "bronze"
+		return 0
 	}
 	else if(exp<80)
 	{
-		return "silver"
+		return 1
 	}
 	else if(exp<130)
 	{
-		return "gold"
+		return 2
 	}
 }
 

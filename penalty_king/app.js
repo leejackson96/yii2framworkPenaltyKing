@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 var m = require("./models");
 var _ = require('lodash');
 var moment = require('moment');
-// var show_friend= require("./penalty_king_API/show_friend");
+var show_friend= require("./penalty_king_API/show_friend");
 var add_friend = require("./penalty_king_API/add_friend");
 var delete_friend = require("./penalty_king_API/delete_friend");
 var initialize= require("./penalty_king_API/initialize");
@@ -14,7 +14,6 @@ var initialize= require("./penalty_king_API/initialize");
 
 var create_avatar = require("./penalty_king_API/create_avatar");
 var check_access_token = require("./penalty_king_API/check_access_token");
-var create_transaction = require("./penalty_king_API/create_transaction");
 var create_in_app_purchase = require("./penalty_king_API/create_in_app_purchase");
 var create_achievement = require("./penalty_king_API/create_achievement");
 var create_robot = require("./penalty_king_API/create_robot");
@@ -189,9 +188,9 @@ app.post('/create_avatar',function(req,res,next){
 app.post('/add_friend',function(req,res,next){
 	add_friend.add_friend(req,res);
 });
-// app.post('/show_friend',function(req,res,next){
-// 	show_friend.show_friend(req,res);
-// });
+app.post('/show_friend',function(req,res,next){
+	show_friend.show_friend(req,res);
+});
 app.post('/delete_friend',function(req,res,next){
 	delete_friend.delete_friend(req,res);
 });
@@ -208,11 +207,6 @@ app.post('/login',function(req,res,next){
 });
 app.post('/get_statistics',function(req,res,next){
 	get_statistics.get_statistics(req,res);
-});
-
-
-app.post('/create_transaction',function(req,res,next){
-	create_transaction.create_transaction(req,res);
 });
 
 app.post('/create_in_app_purchase',function(req,res,next){
