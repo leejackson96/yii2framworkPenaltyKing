@@ -37,7 +37,7 @@ var cancelled_game = require("./penalty_king_API/cancelled_game");
 
 exports = module.exports = router;
 
-var port = 8080;
+var port = 8082;
 var server = http.createServer(app);
 var io = require("socket.io")(server);
 // io.origins('*:*');
