@@ -57,44 +57,59 @@ function start_game(req,res){
 				{
 					m.wallet.findOne({
 						where:{
-							player_id:player_data.id
+							player_id:player_data.id,
+							type:"coin"
 								}
 					}).then(function(wallet_data){
-						var new_balance = parseFloat(wallet_data.balance) -parseFloat(match_type_data.buy_in)  
-						
-						m.wallet.update(
-								{ 
-									balance: new_balance
-								},
-								{ 
-									where: {
-										player_id:player_data.id
+						if(wallet_data)
+						{
+								var new_balance = parseFloat(wallet_data.balance) -parseFloat(match_type_data.buy_in)  
+							
+							m.wallet.update(
+									{ 
+										balance: new_balance
+									},
+									{ 
+										where: {
+											player_id:player_data.id,
+											type:"coin"
+										}
+									});							
+							m.transaction.create({ 
+								wallet_id:wallet_data.id,
+								player_id:wallet_data.player_id,
+								type:'coin',
+								amount:match_type_data.buy_in ,
+								transaction:'out',
+								before_balance:wallet_data.balance,
+								after_balance:new_balance,
+								created_at:moment().format()
+							}).then(function(transaction_data){
+								return res.json({
+									error:{
+										status_code:0,
+										message:"started matchmaking,transaction created"
+									},
+									data:{
+										transaction_id:transaction_data.id,
+										player_id:player_data.id,
+										wallet_id:wallet_data.id,
+
 									}
-								});							
-						m.transaction.create({ 
-							wallet_id:wallet_data.id,
-							player_id:wallet_data.player_id,
-							type:'coin',
-							amount:match_type_data.buy_in ,
-							transaction:'out',
-							before_balance:wallet_data.balance,
-							after_balance:new_balance,
-							created_at:moment().format()
-						}).then(function(transaction_data){
-							return res.json({
-								error:{
-									status_code:0,
-									message:"started matchmaking,transaction created"
-								},
-								data:{
-									transaction_id:transaction_data.id,
-									player_id:player_data.id,
-									wallet_id:wallet_data.id
+								});
 
-								}
 							});
-
-						});
+						}
+						else
+						{
+							return res.json({
+									error:{
+										status_code:1,
+										message:"wallet_data does not found in the database"
+									}
+								});
+						}
+						
 					});
 				}
 				else

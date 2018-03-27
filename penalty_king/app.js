@@ -16,10 +16,10 @@ var create_avatar = require("./penalty_king_API/create_avatar");
 var check_access_token = require("./penalty_king_API/check_access_token");
 var create_in_app_purchase = require("./penalty_king_API/create_in_app_purchase");
 var create_achievement = require("./penalty_king_API/create_achievement");
-var create_robot = require("./penalty_king_API/create_robot");
+// var create_robot = require("./penalty_king_API/create_robot");
 
 var get_statistics = require("./penalty_king_API/get_statistics");
-
+var test_friend = require("./penalty_king_API/test_friend");
 
 var update_avatar = require("./penalty_king_API/update_avatar");
 var update_player = require("./penalty_king_API/update_player");
@@ -37,7 +37,7 @@ var cancelled_game = require("./penalty_king_API/cancelled_game");
 
 exports = module.exports = router;
 
-var port = 8082;
+var port = 8080;
 var server = http.createServer(app);
 var io = require("socket.io")(server);
 // io.origins('*:*');
@@ -208,6 +208,9 @@ app.post('/login',function(req,res,next){
 app.post('/get_statistics',function(req,res,next){
 	get_statistics.get_statistics(req,res);
 });
+app.post('/test_friend',function(req,res,next){
+	test_friend.test_friend(req,res);
+});
 
 app.post('/create_in_app_purchase',function(req,res,next){
 	create_in_app_purchase.create_in_app_purchase(req,res);
@@ -243,9 +246,9 @@ app.post('/reward_player',function(req,res,next){
 	reward_player.reward_player(req,res);
 });
 
-app.post('/create_robot',function(req,res,next){
-	create_robot.create_robot(req,res);
-});
+// app.post('/create_robot',function(req,res,next){
+// 	create_robot.create_robot(req,res);
+// });
 
 app.post('/menu_api',function(req,res,next){
 	menu_api.menu_api(req,res);

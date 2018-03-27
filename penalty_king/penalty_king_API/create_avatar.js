@@ -16,16 +16,40 @@ function create_avatar(req,res){
 		})
 
 	}
-
-	m.avatar.create({ name: name,created_at:moment().format()}).then(function()
+	m.avatar.findOne({
+		where:{
+			name:name
+		}
+	}).then(function(avatar_data){
+		if(avatar_data)
 		{
 			return res.json({
-			 data: {
-			 	message :"successfully created an avatar"
-			 } 
-		})
+			 error: {
+			 	status_code : 1,
+			 	message :"avatar_name already existed"
+				 } 
+			})
+		}
+		else
+		{
+			m.avatar.create({ name: name,created_at:moment().format()}).then(function(avatar)
+			{
+				return res.json({
+					error:{
+						status_code:0,
+						message :"successfully created an avatar"
 
-		});
+					},
+				 data: {
+				 		avatar_id:avatar.id,
+				 		name:name
+					 } 
+				})
+
+			});
+		}
+	})
+	
 
 	
 	

@@ -74,9 +74,12 @@ function menu_api(req,res){
 																message:"successfully retrieved"
 															},
 															data:{
-																balance:wallet_data.balance,
+																avatar_id:player_data.avatar_id,
+																username:player_data.username,
 																rank:current_rank,
-																username:player_data.username
+																balance:wallet_data.balance
+																
+																
 															}
 														});
 													
@@ -102,6 +105,43 @@ function menu_api(req,res){
 	}
 	else if(game_id==2)
 	{
+		var wallet_list=[];
+		m.player.findOne({
+			where:{
+				id:player_id,
+				access_token:access_token
+			}
+		}).then(function(player_data){
+			m.wallet.findAll({
+				where:{
+					player_id:player_id
+				}
+			}).then(function(wallet_data){
+				for(i=0;i<wallet_data.length;i++)
+				{
+					var data={
+						id:wallet_data[i].id,
+						type:wallet_data[i].type,
+						balance:wallet_data[i].balance
+					}
+					wallet_list.push(data)
+
+				}
+				return res.json({
+					error:{
+						status_code:0,
+						message:"successfully retrieved menu_api"
+					},
+					data:{
+						avatar_id:player_data.avatar_id,
+						username:player_data.username,
+						wallet_list:wallet_list
+					}
+					
+				});
+
+			});
+		});
 
 	}
 
@@ -115,14 +155,14 @@ function check_rank(exp){
 
 	if(exp<30)
 	{
-		return "bronze"
+		return 0
 	}
 	else if(exp<80)
 	{
-		return "silver"
+		return 1
 	}
 	else if(exp<130)
 	{
-		return "gold"
+		return 2
 	}
 }

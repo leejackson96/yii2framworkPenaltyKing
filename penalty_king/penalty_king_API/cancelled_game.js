@@ -68,44 +68,60 @@ function cancelled_game(req,res){
 					player_id:player_id
 				}
 			}).then(function(transaction_data){
-				m.wallet.update({
+				if(transaction_data)
+				{
+					m.wallet.update({
 						balance: transaction_data.before_balance
 					},
 					{
 						where:{
-							id:wallet_id,
-							player_id:player_id
+						id:wallet_id,
+						player_id:player_id
 						}
-					}
-			).then(function(wallet_data){
-				if(wallet_data)
-				{
-						m.transaction.create({ 
-							wallet_id:wallet_id,
-							player_id:player_id,
-							type:transaction_data.type,
-							amount:transaction_data.amount ,
-							transaction:'in',
-							before_balance:transaction_data.after_balance,
-							after_balance:transaction_data.before_balance,
-							created_at:moment().format()
-
-						}).then(function(new_transaction_data){
-							return res.json({
-								error:{
-									status_code:0,
-									message:"successfully canceled match making"
-								},
-								data:{
-									transaction_id:new_transaction_data.id,
+					}).then(function(wallet_data){
+						if(wallet_data)
+						{
+								m.transaction.create({ 
 									wallet_id:wallet_id,
-									player_id:player_data.id
-								}
-							});
+									player_id:player_id,
+									type:transaction_data.type,
+									amount:transaction_data.amount ,
+									transaction:'in',
+									before_balance:transaction_data.after_balance,
+									after_balance:transaction_data.before_balance,
+									created_at:moment().format()
 
-						});
-					}
-				});
+								}).then(function(new_transaction_data){
+									return res.json({
+										error:{
+											status_code:0,
+											message:"successfully canceled match making"
+										},
+										data:{
+											transaction_id:new_transaction_data.id,
+											wallet_id:wallet_id,
+											player_id:player_data.id
+										}
+									});
+
+								});
+						}
+						else
+						{
+
+							return res.json({
+								error: {
+								 	status_code : 11,
+								 	message :"wallet does not update"
+									 } 
+								});
+
+						}
+					});
+
+
+				}
+			
 			});
 		}		
 		else

@@ -9,7 +9,7 @@ function check_access_token(req,res){
 	var player_id = req.body.player_id;
 	var access_token = req.body.access_token;
 
-	if(_.isUndefined(req.body.player_id))
+	if(_.isUndefined(player_id))
 	{
 		return res.json({
 			 error: {
@@ -19,7 +19,7 @@ function check_access_token(req,res){
 		});
 
 	}
-	if(_.isUndefined(req.body.access_token))
+	if(_.isUndefined(access_token))
 	{
 		return res.json({
 			 error: {
@@ -29,7 +29,7 @@ function check_access_token(req,res){
 		});
 
 	}
-	
+
 	
 	m.player.findOne({
 		where :{
@@ -40,40 +40,32 @@ function check_access_token(req,res){
 		if(player_data)
 		{
 			return res.json({
-						error:{
-							status_code:0,
-							message:"successfully login"
+				error:{
+					status_code:0,
+					message:"successfully login"
 
-						},
-						data:{
-							 avatar_id:player_data.avatar_id,
-							 player_id : player_data.id,
-							 access_token:access_token			
-							 }
-							  });
-					
-
-
-
-					
-
-
-			
+				},
+				data:{
+					 avatar_id:player_data.avatar_id,
+					 player_id : player_data.id,
+					 access_token:access_token			
+					 }
+			});		
 		}
 		else
 		{
 			return res.json({
-					 		error: {
-					 			status_code : 1,
-					 			message :"Invalid access_token"
-							 } 
-						});
+		 		error: {
+		 			status_code : 1,
+		 			message :"Player Data not found"
+				 } 
+			});
 
 		}
 
 	});
 
-	
+
 	
 
 }

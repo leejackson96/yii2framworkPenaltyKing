@@ -37,21 +37,33 @@ function get_balance(req,res){
 
 		if(player_data)
 		{
-			m.wallet.findOne({
+			m.wallet.findAll({
 				where:{
 					player_id:player_data.id
 						}
 			}).then(function(wallet_data){
-				return res.json({
-					error:{
-						status_code:0,
-						message:"successfully retrieved balance"
-					},
-					data:{
-						type:wallet_data.type,
-						balance:wallet_data.balance
+					var wallet_list=[];
+					for(i=0;i<wallet_data.length;i++)
+					{
+						var data={
+						id:wallet_data[i].id,
+						type:wallet_data[i].type,
+						balance:wallet_data[i].balance
+						}
+						wallet_list	.push(data)
 					}
+						return res.json({
+						error:{
+							status_code:0,
+							message:"successfully retrieved balance"
+						},
+						data:{
+							wallet_list:wallet_list
+						}
+					
 				});
+				
+				
 			})
 		}
 		else

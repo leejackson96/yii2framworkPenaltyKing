@@ -20,7 +20,6 @@ function buy_item(req,res){
 			 	message :"player_id cannot be blank"
 			 } 
 		})
-
 	}
 	if(_.isUndefined(access_token))
 	{
@@ -47,7 +46,7 @@ function buy_item(req,res){
 			id:player_id,
 			access_token:access_token
 		}
-		}).then(function(player_data){
+	}).then(function(player_data){
 
 			if(player_data)
 			{

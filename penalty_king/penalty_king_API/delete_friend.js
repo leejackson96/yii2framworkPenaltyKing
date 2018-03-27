@@ -25,7 +25,7 @@ function delete_friend(req,res){
 		return res.json({
 			 error: {
 			 	status_code : 1,
-			 	message :"access_token cannot be blank"
+			 	message :"friend_id cannot be blank"
 			 } 
 		});
 

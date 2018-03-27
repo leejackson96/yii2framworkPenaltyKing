@@ -20,23 +20,42 @@ function update_avatar(req,res){
 		});
 
 	}
-
-	m.player.update({ 
-		avatar_id: avatar_id
-		},
+	m.avatar.findOne({
+		where:{
+			id:avatar_id
+		}
+	}).then(function(avatar_data){
+		if(avatar_data)
 		{
-			where:{
-				id:player_id
-			}
-		}).then(function()
+			m.player.update({ 
+				avatar_id: avatar_id
+			},
+			{
+				where:{
+					id:player_id
+				}
+			}).then(function()
+			{
+				return res.json({
+				 error: {
+				 	status_code : 0,
+				 	message :"successfully updated an avatar of a player"
+					 } 
+				});
+			})
+
+		}
+		else
 		{
 			return res.json({
-			 error: {
-			 	status_code : 0,
-			 	message :"successfully updated an avatar of a player"
-				 } 
-			});
-		})
+				error:{
+					status_code:1,
+					message:"avatar_id does not exist"
+				}
+			})
+		}
+	})
+	
 
 	
 	

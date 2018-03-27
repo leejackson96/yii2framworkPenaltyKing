@@ -8,9 +8,9 @@ function login_player(req,res){
 
 	var username =req.body.username;
 	var password = req.body.password;
-	var ip_address=  req.body.ip_address;
+	var ip_address= req.body.ip_address;
 	var country = req.body.country;
-
+	
 	if(_.isUndefined(username))
 	{
 		return res.json({
@@ -41,7 +41,7 @@ function login_player(req,res){
 		});
 
 	}
-		if(_.isUndefined(country))
+	if(_.isUndefined(country))
 	{
 		return res.json({
 			 error: {

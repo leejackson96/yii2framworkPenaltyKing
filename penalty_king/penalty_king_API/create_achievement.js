@@ -41,16 +41,39 @@ function create_achievement(req,res){
 		})
 
 	}
-
-	m.achievement.create({ name: name,description:description,total_exp:total_exp,created_at:moment().format()}).then(function()
+	m.achievement.findOne({
+		where:{
+			name:name
+		}
+	}).then(function(achievement_data){
+		if(achievement_data)
 		{
 			return res.json({
-			 data: {
-			 	status_code:0,
-			 	message :"successfully created an achievement"
-			 } 
-		})
-		});
+				 data: {
+				 	status_code:1,
+				 	message :"Achievement already existed"
+					 } 
+				})
+		}
+		else
+		{
+			m.achievement.create({ name: name,description:description,total_exp:total_exp,created_at:moment().format()}).then(function(achievement)
+			{
+				return res.json({
+					error:{
+						status_code:0,
+				 	message :"successfully created an achievement"
+					},
+				 data: {
+				 	achievement_id:achievement.id,
+				 	name:name
+					 } 
+				})
+			});
+
+		}
+	})
+	
 
 	
 	

@@ -49,58 +49,57 @@ function reward_player(req,res){
 
 		if(player_data)
 		{
-		m.wallet.findOne({
-			where:{
-				player_id:player_data.id
-					}
-				}).then(function(wallet_data){
-					var amount;
-					m.result.findOne({
-						where:{
-							id:result_id
+			m.wallet.findOne({
+				where:{
+					player_id:player_data.id
 						}
-					}).then(function(result_data){
-						amount=result_data.pot_won;
-					});
-					var new_balance = parseFloat(wallet_data.balance) +parseFloat(amount)  
-				
-				m.wallet.update(
-						{ 
-							balance: new_balance
-						},
-						{ 
-							where: {
-								player_id:player_id
-							}
-						});
-
-	
-					m.transaction.create({ 
-						wallet_id:wallet_data.id,
-						player_id:wallet_data.player_id,
-						type:room_type,
-						amount:amount,
-						transaction:'in',
-						before_balance:wallet_data.balance,
-						after_balance:new_balance,
-						created_at:moment().format()});	
-									
-					return res.json({
-						error:{
-							status_code:0,
-							message:"successfully reward player"
-						},
-						data:{
-							player_id:wallet_data.player_id,
-							access_token:access_token
-							}
-					});
+			}).then(function(wallet_data){
+				var amount;
+				m.result.findOne({
+					where:{
+						id:result_id
+					}
+				}).then(function(result_data){
+					amount=result_data.pot_won;
 				});
+				var new_balance = parseFloat(wallet_data.balance) +parseFloat(amount)  
+			
+				m.wallet.update(
+				{ 
+					balance: new_balance
+				},
+				{ 
+					where: {
+						player_id:player_id
+					}
+				});
+
+
+				m.transaction.create({ 
+					wallet_id:wallet_data.id,
+					player_id:wallet_data.player_id,
+					type:room_type,
+					amount:amount,
+					transaction:'in',
+					before_balance:wallet_data.balance,
+					after_balance:new_balance,
+					created_at:moment().format()});	
+								
+				return res.json({
+					error:{
+						status_code:0,
+						message:"successfully reward player"
+					},
+					data:{
+						player_id:wallet_data.player_id,
+						access_token:access_token
+						}
+				});
+			});
 
 		}
 		else
 		{
-
 			return res.json({
 				error: {
 			 		status_code : 11,

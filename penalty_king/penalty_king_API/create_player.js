@@ -8,7 +8,6 @@ exports.create_player = create_player ;
 
  	var game_id = req.body.game_id;
  	var method = req.body.method;
-	var username = req.body.username.toLowerCase();
 	var password = req.body.password;
 	var facebook_id = req.body.facebook_id;
 	var country = req.body.country;
@@ -33,40 +32,34 @@ exports.create_player = create_player ;
 					} 
 			})
 	}
-	if(_.isUndefined(username))
-	{
-		return res.json({
-			 error: {
-	 			status_code : 2,
-	 			message :" username cannot be blank"
-					} 
-			})
-	}
-	if(_.isUndefined(ip_address))
-	{
-		return res.json({
-			 error: {
-	 			status_code : 13,
-	 			message : "ip_address cannot be blank"
-					} 
-			})
-	}
-	if(_.isUndefined(country))
-	{
-		return res.json({
-			 error: { 
 
-	 			status_code : 14,
-	 			message : "country cannot be blank"
-					} 
-			})
-	}
+
 
 
 	if(game_id==1)
 	{		
 		if(method==1)
 			{
+				
+				if(_.isUndefined(ip_address))
+				{
+					return res.json({
+						 error: {
+				 			status_code : 13,
+				 			message : "ip_address cannot be blank"
+								} 
+						})
+				}
+				if(_.isUndefined(country))
+				{
+					return res.json({
+						 error: { 
+
+				 			status_code : 14,
+				 			message : "country cannot be blank"
+								} 
+						})
+				}
 				if(_.isUndefined(facebook_id))
 				{
 					return res.json({
@@ -97,7 +90,6 @@ exports.create_player = create_player ;
 					
 						m.player.create({
 							avatar_id:1 ,
-							username: username.toLowerCase(),
 							password:password,
 							facebook_id:facebook_id,
 							status:"online",
@@ -113,6 +105,7 @@ exports.create_player = create_player ;
 							create_bot(player.id);
 							access_token =random_generate_access_token(player.id);
 							m.player.update({
+								username:"user"+player.id,
 								access_token:access_token
 							},
 							{
@@ -121,6 +114,7 @@ exports.create_player = create_player ;
 										}
 							});
 							create_wallet(player.id,'coin',10000);
+							create_statistics(game_id,player.id);
 							create_achievement(player.id);
 							return res.json({
 								error:{
@@ -130,7 +124,7 @@ exports.create_player = create_player ;
 								 data: {
 						 			avatar_id:player.avatar_id,
 			 						player_id:player.id,
-			 						access_token:player.access_token
+			 						access_token:access_token
 										 } 
 							});
 						});
@@ -183,6 +177,35 @@ exports.create_player = create_player ;
 		
 		else if(req.body.method==3)
 		{
+			var username = req.body.username.toLowerCase();
+			if(_.isUndefined(ip_address))
+			{
+				return res.json({
+					 error: {
+			 			status_code : 13,
+			 			message : "ip_address cannot be blank"
+							} 
+					})
+			}
+			if(_.isUndefined(country))
+			{
+				return res.json({
+					 error: { 
+
+			 			status_code : 14,
+			 			message : "country cannot be blank"
+							} 
+					})
+			}
+			if(_.isUndefined(username))
+			{
+				return res.json({
+					 error: {
+			 			status_code : 2,
+			 			message :" username cannot be blank"
+							} 
+					})
+			}
 			m.player.findOne({
 				where:{
 					username:username
@@ -192,10 +215,10 @@ exports.create_player = create_player ;
 				if(data)
 				{
 					return res.json({
-							 error: {
-							 	status_code :1,
-				 				message :"username existed"
-									 } 
+						 error: {
+						 	status_code :1,
+			 				message :"username existed"
+							} 
 						});
 				}
 				else
@@ -204,7 +227,7 @@ exports.create_player = create_player ;
 					m.player.create({
 						avatar_id:1,
 						username: username.toLowerCase(),
-						password:" ",
+						password:"-",
 						facebook_id:"-",
 						status:"online",
 						country:country,
@@ -264,6 +287,25 @@ exports.create_player = create_player ;
 							} 
 					})
 			}
+			if(_.isUndefined(country))
+			{
+				return res.json({
+					 error: { 
+
+			 			status_code : 14,
+			 			message : "country cannot be blank"
+							} 
+					})
+			}
+			if(_.isUndefined(facebook_id))
+			{
+				return res.json({
+					 error: {
+			 			status_code : 1,
+			 			message : "facebook_id cannot be blank"
+							} 
+					})
+			}
 			m.player.findOne({
 				where:{
 					username:username
@@ -284,7 +326,6 @@ exports.create_player = create_player ;
 					
 					m.player.create({
 						avatar_id:1 ,
-						username: username.toLowerCase(),
 						password:password,
 						facebook_id:facebook_id,
 						status:"online",
@@ -300,6 +341,7 @@ exports.create_player = create_player ;
 						create_bot(player.id);
 						access_token =random_generate_access_token(player.id);
 						m.player.update({
+							username:"user"+player.id,
 							access_token:access_token
 						},
 						{
@@ -314,16 +356,16 @@ exports.create_player = create_player ;
 						create_player_item(player.id);
 
 						return res.json({
-								 error:{
-										status_code:0,
-										message:"successfully created"
+							 error:{
+									status_code:0,
+									message:"successfully created"
 
-									},
-									 data: {
-							 			avatar_id:player.avatar_id,
-							 			player_id:player.id,
-							 			access_token:player.access_token
-										 } 
+								},
+								 data: {
+						 			avatar_id:player.avatar_id,
+						 			player_id:player.id,
+						 			access_token:access_token
+									 } 
 							});		
 					});
 				}
@@ -378,6 +420,35 @@ exports.create_player = create_player ;
 
 		else if(method==3)
 		{
+			var username = req.body.username.toLowerCase();
+			if(_.isUndefined(ip_address))
+			{
+				return res.json({
+					 error: {
+			 			status_code : 13,
+			 			message : "ip_address cannot be blank"
+							} 
+					})
+			}
+			if(_.isUndefined(country))
+			{
+				return res.json({
+					 error: { 
+
+			 			status_code : 14,
+			 			message : "country cannot be blank"
+							} 
+					})
+			}
+			if(_.isUndefined(username))
+			{
+				return res.json({
+					 error: {
+			 			status_code : 2,
+			 			message :" username cannot be blank"
+							} 
+					})
+			}
 
 			m.player.findOne({
 				where:{
