@@ -6,34 +6,41 @@ const bodyParser = require("body-parser");
 var m = require("./models");
 var _ = require('lodash');
 var moment = require('moment');
-var show_friend= require("./penalty_king_API/show_friend");
-var add_friend = require("./penalty_king_API/add_friend");
-var delete_friend = require("./penalty_king_API/delete_friend");
+
+
+
 var initialize= require("./penalty_king_API/initialize");
 
 
 var create_avatar = require("./penalty_king_API/create_avatar");
-var check_access_token = require("./penalty_king_API/check_access_token");
+
 var create_in_app_purchase = require("./penalty_king_API/create_in_app_purchase");
 var create_achievement = require("./penalty_king_API/create_achievement");
-// var create_robot = require("./penalty_king_API/create_robot");
-
-var get_statistics = require("./penalty_king_API/get_statistics");
-var test_friend = require("./penalty_king_API/test_friend");
-
-var update_avatar = require("./penalty_king_API/update_avatar");
 var update_player = require("./penalty_king_API/update_player");
 var reward_player = require("./penalty_king_API/reward_player");
+ 
 
 
 
-//done but havent polish yet
+
+//Both Game
 var login_player = require("./penalty_king_API/login_player");
-var menu_api = require("./penalty_king_API/menu_api");
-var create_player = require("./penalty_king_API/create_player");
-var get_balance = require("./penalty_king_API/get_balance");
+var check_access_token = require("./penalty_king_API/check_access_token");
 var start_game = require("./penalty_king_API/start_game");
 var cancelled_game = require("./penalty_king_API/cancelled_game");
+var create_player = require("./penalty_king_API/create_player");
+var add_friend = require("./penalty_king_API/add_friend");
+var show_friend= require("./penalty_king_API/show_friend");   //battle slotty should be different
+var delete_friend = require("./penalty_king_API/delete_friend");
+var update_avatar = require("./penalty_king_API/update_avatar");
+
+
+
+//Individual
+var menu_api = require("./penalty_king_API/menu_api");
+var get_statistics = require("./penalty_king_API/get_statistics");
+var get_balance = require("./penalty_king_API/get_balance");
+
 
 exports = module.exports = router;
 
@@ -208,9 +215,9 @@ app.post('/login',function(req,res,next){
 app.post('/get_statistics',function(req,res,next){
 	get_statistics.get_statistics(req,res);
 });
-app.post('/test_friend',function(req,res,next){
-	test_friend.test_friend(req,res);
-});
+// app.post('/test_friend',function(req,res,next){
+// 	test_friend.test_friend(req,res);
+// });
 
 app.post('/create_in_app_purchase',function(req,res,next){
 	create_in_app_purchase.create_in_app_purchase(req,res);
