@@ -71,25 +71,44 @@ exports.create_player = create_player ;
 				}
 				m.player.findOne({
 					where:{
-						username:username
+						username:facebook_id,
+						facebook_id:facebook_id
 					}
 				}).then(function(data)
 				{
 					if(data)
 					{
-						return res.json({
-							error: {
-								status_code :1,
-					 			message :"username existed"
-									} 
+							access_token =random_generate_access_token(data.id);
+							m.player.update({
+								access_token:access_token,
+								ip_address:ip_address,
+								country:country
+							},
+							{
+								where:{
+									username:facebook_id,
+									facebook_id:facebook_id
+										}
+							});
 
-						});
+							return res.json({
+								error:{
+									status_code:0,
+									message:"successfully login"
+								},
+								 data: {
+						 			avatar_id:data.avatar_id,
+			 						player_id:data.id,
+			 						access_token:access_token
+										 } 
+							});
 					}
 					else
 					{
 					
 						m.player.create({
 							avatar_id:1 ,
+							username:facebook_id,
 							password:password,
 							facebook_id:facebook_id,
 							status:"online",
@@ -101,11 +120,9 @@ exports.create_player = create_player ;
 							created_at:moment().format()
 						}).then(function(player)
 						{
-
 							create_bot(player.id);
 							access_token =random_generate_access_token(player.id);
 							m.player.update({
-								username:"user"+player.id,
 								access_token:access_token
 							},
 							{
@@ -314,18 +331,37 @@ exports.create_player = create_player ;
 			{
 				if(data)
 				{
-					return res.json({
-						 error: {
-						 	status_code :1,
-			 				message :"username existed"
-								 } 
-					});
+					access_token =random_generate_access_token(data.id);
+							m.player.update({
+								access_token:access_token,
+								ip_address:ip_address,
+								country:country
+							},
+							{
+								where:{
+									username:facebook_id,
+									facebook_id:facebook_id
+										}
+							});
+
+							return res.json({
+								error:{
+									status_code:0,
+									message:"successfully login"
+								},
+								 data: {
+						 			avatar_id:data.avatar_id,
+			 						player_id:data.id,
+			 						access_token:access_token
+										 } 
+							});
 				}
 				else
 				{
 					
 					m.player.create({
 						avatar_id:1 ,
+						username:facebook_id,
 						password:password,
 						facebook_id:facebook_id,
 						status:"online",
@@ -341,7 +377,7 @@ exports.create_player = create_player ;
 						create_bot(player.id);
 						access_token =random_generate_access_token(player.id);
 						m.player.update({
-							username:"user"+player.id,
+							
 							access_token:access_token
 						},
 						{

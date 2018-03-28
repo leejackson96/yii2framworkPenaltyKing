@@ -33,7 +33,7 @@ var add_friend = require("./penalty_king_API/add_friend");
 var show_friend= require("./penalty_king_API/show_friend");   //battle slotty should be different
 var delete_friend = require("./penalty_king_API/delete_friend");
 var update_avatar = require("./penalty_king_API/update_avatar");
-
+var delete_avatar = require("./penalty_king_API/delete_avatar");
 
 
 //Individual
@@ -230,6 +230,10 @@ app.post('/create_achievement',function(req,res,next){
 app.post('/update_avatar',function(req,res,next){
 	update_avatar.update_avatar(req,res);
 });
+app.post('/delete_avatar',function(req,res,next){
+	delete_avatar.delete_avatar(req,res);
+});
+
 app.post('/update_player',function(req,res,next){
 	update_player.update_player(req,res);
 });
