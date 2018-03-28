@@ -9,7 +9,19 @@ function start_game(req,res){
 
 	var player_id = req.body.player_id;
 	var access_token = req.body.access_token;
-	var room_type = req.body.room_type;
+	var pot_value = req.body.pot_value;
+	var game_id = req.body.game_id;
+	var room_type= "";
+	if(_.isUndefined(game_id))
+	{
+		return res.json({
+			 error: {
+			 	status_code : 1016,
+			 	message :"game_id cannot be blank"
+			 } 
+		})
+
+	}
 	if(_.isUndefined(player_id))
 	{
 		return res.json({
@@ -30,15 +42,92 @@ function start_game(req,res){
 		})
 
 	}
-	if(_.isUndefined(room_type))
+	if(_.isUndefined(pot_value))
 	{
 		return res.json({
 			 error: {
 			 	status_code : 1039,
-			 	message :"room_type cannot be blank"
+			 	message :"pot_value cannot be blank"
 			 } 
 		})
 
+	}
+	if(game_id==1)
+	{
+		if(pot_value==1)
+		{
+			room_type="novice"
+		}
+		else if(pot_value==2)
+		{
+			room_type="amateur"
+		}
+		else if(pot_value==3)
+		{
+			room_type="medium"
+		}
+		else if(pot_value==4)
+		{
+			room_type="pro"
+		}
+		else if(pot_value==5)
+		{
+			room_type="world class"
+		}
+		else
+		{
+			return res.json({
+				error:{
+					status_code:2039,
+					message:"invalid pot_value"
+				}
+			})
+
+		}
+
+	}
+	else if(game_id==1)
+	{
+		if(pot_value==1)
+		{
+			room_type=""
+		}
+		else if(pot_value==2)
+		{
+			room_type=""
+		}
+		else if(pot_value==3)
+		{
+			room_type=""
+		}
+		else if(pot_value==4)
+		{
+			room_type=""
+		}
+		else if(pot_value==5)
+		{
+			room_type=""
+		}
+		else
+		{
+			return res.json({
+				error:{
+					status_code:2039,
+					message:"invalid pot_value"
+				}
+			})
+
+		}
+
+	}
+	else
+	{
+		return res.json({
+			error:{
+				status_code:2016,
+				message:"invalid game_id"
+			}
+		})
 	}
 	m.match_type.findOne({
 		where:{
