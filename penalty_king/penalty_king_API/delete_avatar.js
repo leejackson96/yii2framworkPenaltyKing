@@ -13,7 +13,7 @@ exports.delete_avatar = delete_avatar ;
  	{
  		return res.json({
  			error:{
- 				status_code:1,
+ 				status_code:1000,
  				message:"avatar_id cannot be blank"
  			}
  		})
@@ -28,8 +28,8 @@ exports.delete_avatar = delete_avatar ;
  		{
  			return res.json({
  				error:{
- 						status_code:1,
- 						message:"avatar_id already deleted"
+ 						status_code:3000,
+ 						message:" avatar already deleted"
  					}
  			})
  		}
@@ -59,7 +59,7 @@ exports.delete_avatar = delete_avatar ;
  		{
  			return res.json({
  				error:{
- 					status_code:1,
+ 					status_code:3000,
  					message:"avatar_id does not exist in the database"
  				}
  			})

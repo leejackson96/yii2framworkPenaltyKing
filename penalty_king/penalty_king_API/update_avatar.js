@@ -14,7 +14,7 @@ function update_avatar(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1000,
 			 	message :"avatar_id cannot be blank"
 			 } 
 		});
@@ -49,7 +49,7 @@ function update_avatar(req,res){
 		{
 			return res.json({
 				error:{
-					status_code:1,
+					status_code:3000,
 					message:"avatar_id does not exist"
 				}
 			})

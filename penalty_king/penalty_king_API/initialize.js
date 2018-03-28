@@ -17,8 +17,8 @@ function initialize(req,res){
 		{
 			return res.json({
 			error:{
-				status_code:1,
-				message:"avatar already existed"
+				status_code:3001,
+				message:"avatar  already existed"
 				}
 			})
 

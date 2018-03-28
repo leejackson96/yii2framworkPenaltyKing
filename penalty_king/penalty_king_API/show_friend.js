@@ -22,7 +22,7 @@ var friend_info=[];
 	{	
 			return res.json({
 				error: {
-			 			status_code : 1,
+			 			status_code : 1006,
 			 			message :" player_id cannot be blank"
 						}
 					})
@@ -61,7 +61,7 @@ function calculate_total_friend(player_id)
 				{
 					return res.json({
 						error: {
-					 			status_code : 1,
+					 			status_code : 3006,
 					 			message :"this player does not have friend"
 								}
 							})
@@ -109,8 +109,8 @@ function check_achievement(req,res)
 			{
 				return res.json({
 					error:{
-						status_code:1,
-						message:"rank does not find in the database"
+						status_code:3041,
+						message:"rank does not found in the database"
 					}
 				})
 			}
@@ -149,7 +149,7 @@ function check_player_achievement(req,res)
 				{
 					return res.json({
 						error:{
-						status_code:1,
+						status_code:3008,
 						message:"player_achievement_data does not find in the database"
 						}
 					})

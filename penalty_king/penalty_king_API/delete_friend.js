@@ -13,7 +13,7 @@ function delete_friend(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1006,
 			 	message :"player_id cannot be blank"
 			 } 
 		});
@@ -24,7 +24,7 @@ function delete_friend(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1006,
 			 	message :"friend_id cannot be blank"
 			 } 
 		});
@@ -70,7 +70,7 @@ function delete_friend(req,res){
 		{
 			return res.json({
 					 		error: {
-					 			status_code : 1,
+					 			status_code :2006,
 					 			message :"Invalid player_id/friend_id "
 							 } 
 						});

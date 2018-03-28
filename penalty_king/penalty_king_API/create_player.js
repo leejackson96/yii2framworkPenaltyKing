@@ -18,7 +18,7 @@ exports.create_player = create_player ;
 	{
 		return res.json({
 			 error: {
-	 			status_code : 1,
+	 			status_code : 1016,
 	 			message :" game_id cannot be blank"
 					} 
 			})
@@ -27,7 +27,7 @@ exports.create_player = create_player ;
 	{
 		return res.json({
 			 error: {
-	 			status_code : 1,
+	 			status_code : 1035,
 	 			message :" method cannot be blank"
 					} 
 			})
@@ -45,7 +45,7 @@ exports.create_player = create_player ;
 				{
 					return res.json({
 						 error: {
-				 			status_code : 13,
+				 			status_code : 1036,
 				 			message : "ip_address cannot be blank"
 								} 
 						})
@@ -55,7 +55,7 @@ exports.create_player = create_player ;
 					return res.json({
 						 error: { 
 
-				 			status_code : 14,
+				 			status_code : 1037,
 				 			message : "country cannot be blank"
 								} 
 						})
@@ -64,7 +64,7 @@ exports.create_player = create_player ;
 				{
 					return res.json({
 						 error: {
-				 			status_code : 1,
+				 			status_code : 1017,
 				 			message : "facebook_id cannot be blank"
 								} 
 						})
@@ -155,7 +155,7 @@ exports.create_player = create_player ;
 			{
 				return res.json({
 					 error: {
-			 			status_code : 10,
+			 			status_code : 1038,
 			 			message : "password cannot be blank"
 							} 
 					})
@@ -199,7 +199,7 @@ exports.create_player = create_player ;
 			{
 				return res.json({
 					 error: {
-			 			status_code : 13,
+			 			status_code : 1036,
 			 			message : "ip_address cannot be blank"
 							} 
 					})
@@ -209,7 +209,7 @@ exports.create_player = create_player ;
 				return res.json({
 					 error: { 
 
-			 			status_code : 14,
+			 			status_code : 1037,
 			 			message : "country cannot be blank"
 							} 
 					})
@@ -218,7 +218,7 @@ exports.create_player = create_player ;
 			{
 				return res.json({
 					 error: {
-			 			status_code : 2,
+			 			status_code : 1022,
 			 			message :" username cannot be blank"
 							} 
 					})
@@ -233,7 +233,7 @@ exports.create_player = create_player ;
 				{
 					return res.json({
 						 error: {
-						 	status_code :1,
+						 	status_code :3022,
 			 				message :"username existed"
 							} 
 						});
@@ -295,12 +295,12 @@ exports.create_player = create_player ;
 		
 		if(method==1)
 		{
-			if(_.isUndefined(facebook_id))
+			if(_.isUndefined(ip_address))
 			{
 				return res.json({
 					 error: {
-			 			status_code : 1,
-			 			message : "facebook_id cannot be blank"
+			 			status_code : 1036,
+			 			message : "ip_address cannot be blank"
 							} 
 					})
 			}
@@ -309,7 +309,7 @@ exports.create_player = create_player ;
 				return res.json({
 					 error: { 
 
-			 			status_code : 14,
+			 			status_code : 1037,
 			 			message : "country cannot be blank"
 							} 
 					})
@@ -318,7 +318,7 @@ exports.create_player = create_player ;
 			{
 				return res.json({
 					 error: {
-			 			status_code : 1,
+			 			status_code : 1017,
 			 			message : "facebook_id cannot be blank"
 							} 
 					})
@@ -415,7 +415,7 @@ exports.create_player = create_player ;
 			{
 				return res.json({
 					 error: {
-		 				status_code : 10,
+		 				status_code : 1038,
 		 				message : "password cannot be blank"
 						} 
 					})
@@ -461,7 +461,7 @@ exports.create_player = create_player ;
 			{
 				return res.json({
 					 error: {
-			 			status_code : 13,
+			 			status_code : 1036,
 			 			message : "ip_address cannot be blank"
 							} 
 					})
@@ -471,7 +471,7 @@ exports.create_player = create_player ;
 				return res.json({
 					 error: { 
 
-			 			status_code : 14,
+			 			status_code : 1037,
 			 			message : "country cannot be blank"
 							} 
 					})
@@ -480,7 +480,7 @@ exports.create_player = create_player ;
 			{
 				return res.json({
 					 error: {
-			 			status_code : 2,
+			 			status_code : 1022,
 			 			message :" username cannot be blank"
 							} 
 					})
@@ -496,7 +496,7 @@ exports.create_player = create_player ;
 				{
 					return res.json({
 						 error: {
-						 	status_code :1,
+						 	status_code :3022,
 			 				message :"username existed"
 								 } 
 

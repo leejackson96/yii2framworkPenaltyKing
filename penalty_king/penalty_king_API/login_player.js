@@ -15,7 +15,7 @@ function login_player(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 2,
+			 	status_code : 1022,
 			 	message :"username cannot be blank"
 			 } 
 		});
@@ -25,7 +25,7 @@ function login_player(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 10,
+			 	status_code : 1038,
 			 	message :"password cannot be blank"
 			 } 
 		});
@@ -35,7 +35,7 @@ function login_player(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 10,
+			 	status_code : 1036,
 			 	message :"ip_address cannot be blank"
 			 } 
 		});
@@ -45,7 +45,7 @@ function login_player(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 10,
+			 	status_code : 1037,
 			 	message :"country cannot be blank"
 			 } 
 		});
@@ -64,7 +64,7 @@ function login_player(req,res){
 			{
 				return res.json({
 					 error: {
-			 			status_code : 10,
+			 			status_code : 3040,
 			 			message :"must create online acc first"
 							 } 
 					});
@@ -103,8 +103,8 @@ function login_player(req,res){
 		{
 			return res.json({
 				  	error:{
-					 status_code :1,
-					 message:"username/password is wrong"	
+					 status_code :1022,
+					 message:"invalid username/password"	
 				  	}
 
 

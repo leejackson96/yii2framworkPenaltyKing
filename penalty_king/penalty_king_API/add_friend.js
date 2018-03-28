@@ -12,7 +12,7 @@ exports.add_friend = add_friend ;
 	{
 		return res.json({
 			 error: {
-	 			status_code : 1,
+	 			status_code : 1006,
 	 			message :" player_id cannot be blank"
 					} 
 			})
@@ -22,7 +22,7 @@ exports.add_friend = add_friend ;
 	{
 		return res.json({
 			 error: {
-	 			status_code : 1,
+	 			status_code : 1022,
 	 			message :" friend_username cannot be blank"
 					} 
 			})
@@ -40,7 +40,7 @@ exports.add_friend = add_friend ;
 			{
 				return res.json({
 							error:{
-								status_code:3,
+								status_code:3022,
 								message:"This is your username"
 
 							}
@@ -58,7 +58,7 @@ exports.add_friend = add_friend ;
 					{
 						return res.json({
 							error:{
-								status_code:300,
+								status_code:3006,
 								message:"It is existed in your friend_list"
 
 							}
@@ -118,8 +118,8 @@ exports.add_friend = add_friend ;
 		{
 			return res.json({
 				error:{
-					status_code:2,
-					message:"username not found"
+					status_code:3022,
+					message:"friend_username not found"
 				}
 			})
 		}

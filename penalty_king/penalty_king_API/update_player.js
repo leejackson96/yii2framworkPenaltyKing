@@ -15,7 +15,7 @@ function update_player(req,res){
 	{
 			return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1006,
 			 	message :"player_id cannot be blank"
 			 } 
 		})

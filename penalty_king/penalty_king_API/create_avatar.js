@@ -10,7 +10,7 @@ function create_avatar(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1023,
 			 	message :"avatar_name cannot be blank"
 			 } 
 		})
@@ -25,7 +25,7 @@ function create_avatar(req,res){
 		{
 			return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 3023,
 			 	message :"avatar_name already existed"
 				 } 
 			})

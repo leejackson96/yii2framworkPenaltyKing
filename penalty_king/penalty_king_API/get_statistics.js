@@ -14,8 +14,8 @@ function get_statistics(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
-			 	message :"Invalid game_id"
+			 	status_code : 1016,
+			 	message :"game_id cannot be blank"
 			 } 
 		});
 
@@ -25,8 +25,8 @@ function get_statistics(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
-			 	message :"Invalid player_id"
+			 	status_code : 1006,
+			 	message :"player_id cannot be blank"
 			 } 
 		});
 
@@ -35,8 +35,8 @@ function get_statistics(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
-			 	message :"Invalid access_token "
+			 	status_code : 1031,
+			 	message :"access_token cannot be blank "
 			 } 
 		});
 
@@ -103,8 +103,8 @@ function get_statistics(req,res){
 			{
 				return res.json({
 					error:{
-						status_code:1,
-						message:"Player does not exist in the database"
+						status_code:2006,
+						message:"invalid access_token/player_id"
 					}
 				})
 			}
@@ -161,8 +161,8 @@ function get_statistics(req,res){
 			{
 				return res.json({
 					error:{
-						status_code:1,
-						message:"Player does not exist in the database"
+						status_code:2006,
+						message:"invalid access_token/player_id"
 					}
 				})
 			}

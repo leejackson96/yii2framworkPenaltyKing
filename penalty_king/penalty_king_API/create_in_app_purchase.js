@@ -17,7 +17,7 @@ function create_in_app_purchase(req,res){
 		
 			return res.json({
 			 error: {
-			 	status_code : 15,
+			 	status_code : 1032,
 			 	message :"price cannot be blank"
 			 } 
 			})
@@ -27,7 +27,7 @@ function create_in_app_purchase(req,res){
 		
 			return res.json({
 			 error: {
-			 	status_code : 5,
+			 	status_code : 1033,
 			 	message :"type cannot be blank"
 			 } 
 			})
@@ -37,7 +37,7 @@ function create_in_app_purchase(req,res){
 		
 			return res.json({
 			 error: {
-			 	status_code : 7,
+			 	status_code : 1034,
 			 	message :"paid_amount cannot be blank"
 			 } 
 			})
@@ -47,7 +47,7 @@ function create_in_app_purchase(req,res){
 		
 			return res.json({
 			 error: {
-			 	status_code : 4,
+			 	status_code : 1028,
 			 	message :"amount cannot be blank"
 			 } 
 				})

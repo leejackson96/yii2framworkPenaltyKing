@@ -13,7 +13,7 @@ function menu_api(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1016,
 			 	message :"game_id cannot be blank"
 			 } 
 		})
@@ -23,7 +23,7 @@ function menu_api(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1006,
 			 	message :"player_id cannot be blank"
 			 } 
 		})
@@ -33,7 +33,7 @@ function menu_api(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 11,
+			 	status_code : 1031,
 			 	message :"access_token cannot be blank"
 			 } 
 		})

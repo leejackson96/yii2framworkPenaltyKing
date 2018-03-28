@@ -12,7 +12,7 @@ function get_balance(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1006,
 			 	message :"player_id cannot be blank"
 			 } 
 		})
@@ -22,7 +22,7 @@ function get_balance(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 11,
+			 	status_code : 1031,
 			 	message :"access_token cannot be blank"
 			 } 
 		})
@@ -71,7 +71,7 @@ function get_balance(req,res){
 
 			return res.json({
 			 error: {
-			 	status_code : 11,
+			 	status_code : 2006,
 			 	message :"invalid access_token/player_id "
 				 } 
 			})

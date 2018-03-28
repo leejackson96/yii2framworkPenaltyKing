@@ -13,7 +13,7 @@ function check_access_token(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1006,
 			 	message :"player_id cannot be blank"
 			 } 
 		});
@@ -23,7 +23,7 @@ function check_access_token(req,res){
 	{
 		return res.json({
 			 error: {
-			 	status_code : 1,
+			 	status_code : 1031,
 			 	message :"access_token cannot be blank"
 			 } 
 		});
@@ -56,8 +56,8 @@ function check_access_token(req,res){
 		{
 			return res.json({
 		 		error: {
-		 			status_code : 1,
-		 			message :"Player Data not found"
+		 			status_code : 2006,
+		 			message :"invalid access_token/player_id"
 				 } 
 			});
 
