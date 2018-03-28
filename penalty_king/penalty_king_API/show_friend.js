@@ -157,6 +157,23 @@ function check_player_achievement(req,res)
 				}
 				
 			})
+			m.statistics.findOne({
+				where:{
+						player_id:context.friend[i]
+				}
+			}).then(function(statistics_data){ 
+				if(statistics_data.total_match==0)
+				{
+						 win_rate = 0;
+				}
+				else
+				{
+						 win_rate = (parseInt(statistics_data.total_win) / parseInt(statistics_data.total_match))*100;	
+
+				}
+					
+
+			})
 
 			m.player.findOne({
 				where:{
@@ -165,7 +182,7 @@ function check_player_achievement(req,res)
 			}).then(function(player_data){
 				if(player_data)
 				{
-					player_info.push({avatar_id:player_data.avatar_id,id:player_data.id,username:player_data.username,status:player_data.status,rank:current_rank})
+					player_info.push({avatar_id:player_data.avatar_id,id:player_data.id,username:player_data.username,status:player_data.status,win_rate:win_rate,rank:current_rank})
 					// context.player_information=player_info;
 							
 				}
