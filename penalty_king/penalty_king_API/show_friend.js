@@ -77,8 +77,9 @@ function calculate_total_friend(player_id)
 					
 					}
 					context.friend=friend_list;
+					console.log(context.friend)
 						next();
-					// console.log(context.friend)
+					 
 
 
 					
@@ -113,6 +114,7 @@ function check_achievement(req,res)
 						message:"rank does not found in the database"
 					}
 				})
+				next();
 			}
 
 			
@@ -128,8 +130,9 @@ function check_player_achievement(req,res)
 	return function(context,next)
 	{	
 			//console.log(context.friend);
-
-
+			player_info=[];
+			var win_rate;
+			var current_rank;
 		for(i=0;i<context.number;i++)
 		{
 				m.player_achievement.findOne({
@@ -140,7 +143,7 @@ function check_player_achievement(req,res)
 			}).then(function(player_achievement_data){
 				if(player_achievement_data)
 				{
-					current_rank = check_rank(player_achievement_data.current_exp);
+					 current_rank = check_rank(player_achievement_data.current_exp);
 					// achievement_array.push(current_rank)
 					// context.array=achievement_array;
 							
@@ -164,11 +167,11 @@ function check_player_achievement(req,res)
 			}).then(function(statistics_data){ 
 				if(statistics_data.total_match==0)
 				{
-						 win_rate = 0;
+						  win_rate = 0;
 				}
 				else
 				{
-						 win_rate = (parseInt(statistics_data.total_win) / parseInt(statistics_data.total_match))*100;	
+						  win_rate = (parseInt(statistics_data.total_win) / parseInt(statistics_data.total_match))*100;	
 
 				}
 					
@@ -233,7 +236,7 @@ function show_all(req,res)
 	return function(context,next)
 	{
 		context.show=friend_info;
-		console.log(context.show)
+		//console.log(context.show)
 		return res.json({
 			error:{
 				status_code:0,
