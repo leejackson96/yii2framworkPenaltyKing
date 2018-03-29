@@ -60,7 +60,7 @@ exports.create_player = create_player ;
 								} 
 						})
 				}
-				if(_.isUndefined(facebook_id))
+				if(_.isUndefined(facebook_id)|| facebook_id=="null" || facebook_id==null)
 				{
 					return res.json({
 						 error: {
@@ -80,6 +80,7 @@ exports.create_player = create_player ;
 					{
 							access_token =random_generate_access_token(data.id);
 							m.player.update({
+								status:"online",
 								access_token:access_token,
 								ip_address:ip_address,
 								country:country
@@ -214,7 +215,7 @@ exports.create_player = create_player ;
 							} 
 					})
 			}
-			if(_.isUndefined(username))
+			if(_.isUndefined(username)|| username==null)
 			{
 				return res.json({
 					 error: {
@@ -245,7 +246,6 @@ exports.create_player = create_player ;
 						avatar_id:1,
 						username: username.toLowerCase(),
 						password:"-",
-						facebook_id:"-",
 						status:"online",
 						country:country,
 						ip_address:ip_address,
@@ -284,6 +284,15 @@ exports.create_player = create_player ;
 				}
 			});
 		
+		}
+		else
+		{
+			return res.json({
+				error:{
+					status_code:2035,
+					message:"invalid method"
+				}
+			})
 		}
 
 	}
@@ -333,6 +342,7 @@ exports.create_player = create_player ;
 				{
 					access_token =random_generate_access_token(data.id);
 							m.player.update({
+								status:"online",
 								access_token:access_token,
 								ip_address:ip_address,
 								country:country
@@ -509,7 +519,6 @@ exports.create_player = create_player ;
 						avatar_id:1,
 						username: username.toLowerCase(),
 						password:" ",
-						facebook_id:"-",
 						status:"online",
 						country:country,
 						ip_address:ip_address,
@@ -550,6 +559,15 @@ exports.create_player = create_player ;
 							
 				}
 			});
+		}
+			else
+		{
+			return res.json({
+				error:{
+					status_code:2035,
+					message:"invalid method"
+				}
+			})
 		}
 	}
 }

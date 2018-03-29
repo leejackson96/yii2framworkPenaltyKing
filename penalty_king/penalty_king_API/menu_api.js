@@ -9,6 +9,7 @@ function menu_api(req,res){
 	var player_id = req.body.player_id;
 	var access_token = req.body.access_token;
 	var current_rank;
+	var method;
 	if(_.isUndefined(game_id))
 	{
 		return res.json({
@@ -53,7 +54,14 @@ function menu_api(req,res){
 								access_token:access_token
 							}
 						}).then(function(player_data){
-
+							if(player_data.facebook_id==null)
+							{
+								method=1;
+							}
+							else if(player_data.facebook_id!=null)
+							{
+								method=0;
+							}
 							if(player_data)
 							{	
 								m.player_achievement.findOne({
@@ -74,6 +82,7 @@ function menu_api(req,res){
 																message:"successfully retrieved"
 															},
 															data:{
+																method:method,
 																avatar_id:player_data.avatar_id,
 																username:player_data.username,
 																rank:current_rank,
@@ -112,6 +121,14 @@ function menu_api(req,res){
 				access_token:access_token
 			}
 		}).then(function(player_data){
+			if(player_data.facebook_id==null)
+			{
+				method=1;
+			}
+			else if(player_data.facebook_id!=null)
+			{
+				method=0;
+			}
 			m.wallet.findAll({
 				where:{
 					player_id:player_id
@@ -133,6 +150,7 @@ function menu_api(req,res){
 						message:"successfully retrieved menu_api"
 					},
 					data:{
+						method:method,
 						avatar_id:player_data.avatar_id,
 						username:player_data.username,
 						wallet_list:wallet_list

@@ -18,7 +18,7 @@ var create_in_app_purchase = require("./penalty_king_API/create_in_app_purchase"
 var create_achievement = require("./penalty_king_API/create_achievement");
 var update_player = require("./penalty_king_API/update_player");
 var reward_player = require("./penalty_king_API/reward_player");
- 
+var exit_game = require("./penalty_king_API/exit_game");
 
 
 
@@ -263,5 +263,9 @@ app.post('/reward_player',function(req,res,next){
 
 app.post('/menu_api',function(req,res,next){
 	menu_api.menu_api(req,res);
+});
+
+app.post('/exit_game',function(req,res,next){
+	exit_game.exit_game(req,res);
 });
 

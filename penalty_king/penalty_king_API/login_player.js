@@ -72,6 +72,7 @@ function login_player(req,res){
 			}
 			var access_token = random_generate_access_token(player_data.id);
 			m.player.update({
+				status:"online",
 				access_token:access_token,
 				ip_address:ip_address,
 				country:country
