@@ -100,7 +100,7 @@ exports.add_friend = add_friend ;
 						return res.json({
 							error:{
 								status_code:0,
-								message:"successfully added friend sss"
+								message:"successfully added friend "
 								},
 							data:{
 								player_id:player_id,
