@@ -8,7 +8,7 @@ exports.bind_facebook = bind_facebook ;
  	var player_id=req.body.player_id
  	var facebook_id=req.body.facebook_id
 
- 	if(_.isUndefined(player_id)||facebook_id==null )
+ 	if(_.isUndefined(player_id)||player_id==null )
  	{
  			return res.json({
 			 error: {
@@ -17,7 +17,7 @@ exports.bind_facebook = bind_facebook ;
 					} 
 			})
  	}
- 	if(facebook_id==null || _.isUndefined(player_id))
+ 	if(facebook_id==null || _.isUndefined(facebook_id))
  	{
  			return res.json({
 			 error: {
