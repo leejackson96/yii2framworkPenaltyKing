@@ -44,7 +44,7 @@ var get_balance = require("./penalty_king_API/get_balance");
 
 exports = module.exports = router;
 
-var port = 8080;
+var port = 8092;
 var server = http.createServer(app);
 var io = require("socket.io")(server);
 // io.origins('*:*');
