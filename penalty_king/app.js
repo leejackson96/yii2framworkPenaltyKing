@@ -20,7 +20,7 @@ var update_player = require("./penalty_king_API/update_player");
 var reward_player = require("./penalty_king_API/reward_player");
 var exit_game = require("./penalty_king_API/exit_game");
 
-
+var bind_facebook = require("./penalty_king_API/bind_facebook");
 
 
 //Both Game
@@ -267,5 +267,8 @@ app.post('/menu_api',function(req,res,next){
 
 app.post('/exit_game',function(req,res,next){
 	exit_game.exit_game(req,res);
+});
+app.post('/bind_facebook',function(req,res,next){
+	bind_facebook.bind_facebook(req,res);
 });
 

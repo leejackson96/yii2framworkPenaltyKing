@@ -163,7 +163,7 @@ exports.create_player = create_player ;
 			}
 			m.player.findOne({
 			where:{
-				username:username
+				id:player_id
 				}
 			}).then(function(player_data)
 				{
@@ -174,7 +174,7 @@ exports.create_player = create_player ;
 					},
 					{
 						where:{
-							username:username
+							id:player_id
 						}
 					}).then(function()
 					{
@@ -433,7 +433,7 @@ exports.create_player = create_player ;
 
 			m.player.findOne({
 				where:{
-					username:username
+					id:player_id
 					}
 			}).then(function(player_data)
 			{
@@ -444,7 +444,7 @@ exports.create_player = create_player ;
 				},
 				{
 					where:{
-						username:username
+						id:player_id
 						}
 				}).then(function()
 				{

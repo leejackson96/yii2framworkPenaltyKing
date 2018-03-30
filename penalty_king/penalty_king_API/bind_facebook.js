@@ -1,0 +1,56 @@
+var m = require("../models");
+var _ = require('lodash');
+var moment = require('moment');
+exports = module.exports = {};
+exports.bind_facebook = bind_facebook ;
+
+ function bind_facebook(req,res){
+ 	var player_id=req.body.player_id
+ 	var facebook_id=req.body.facebook_id
+
+ 	if(_.isUndefined(player_id)||facebook_id==null )
+ 	{
+ 			return res.json({
+			 error: {
+	 			status_code : 1006,
+	 			message :" player_id cannot be blank"
+					} 
+			})
+ 	}
+ 	if(facebook_id==null || _.isUndefined(player_id))
+ 	{
+ 			return res.json({
+			 error: {
+	 			status_code : 1017,
+	 			message :" facebook_id cannot be blank"
+					} 
+			})
+ 	}
+ 	m.player.findOne({
+ 		where:{
+ 			id:player_id
+ 		}
+ 	}).then(function(player_data){
+ 		if(player_data)
+ 		{	
+ 			m.player.update({
+ 				facebook_id:facebook_id,
+ 				is_guest=0
+ 			},
+ 			{
+ 				where:{
+ 					id:player_id
+ 				}
+ 			})
+ 		}
+ 		else
+ 		{
+ 			return res.json({
+ 				error:{
+ 					status_code:3006,
+ 					message:"player_id cannot found"
+ 				}
+ 			})
+ 		}
+ 	})
+ }
