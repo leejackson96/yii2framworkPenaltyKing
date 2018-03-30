@@ -60,7 +60,7 @@ exports.create_player = create_player ;
 								} 
 						})
 				}
-				if(_.isUndefined(facebook_id)|| facebook_id=="null" || facebook_id==null)
+				if(_.isUndefined(facebook_id))
 				{
 					return res.json({
 						 error: {
@@ -152,6 +152,16 @@ exports.create_player = create_player ;
 		}
 		else if(method==2)
 		{
+			var username = req.body.username;
+			if(_.isUndefined(username))
+			{
+				return res.json({
+					 error: {
+			 			status_code : 1022,
+			 			message :" username cannot be blank"
+							} 
+					})
+			}
 			if(_.isUndefined(password)|| password==" ")
 			{
 				return res.json({
@@ -163,39 +173,53 @@ exports.create_player = create_player ;
 			}
 			m.player.findOne({
 			where:{
-				id:player_id
+				username:username
 				}
 			}).then(function(player_data)
 				{
-					m.player.update(
-					{
-						password:password,
-						is_guest:0
-					},
-					{
-						where:{
-							id:player_id
-						}
-					}).then(function()
+					if(player_data)
 					{
 						return res.json({
 							 error: {
-						 		status_code :0,
-			 					message :"updated successfully"
-								 },
-							data: {
-						 		avatar_id:player_data.avatar_id,
-							 	player_id:player_data.id,
-							 	access_token:player_data.access_token
-							 }  
-						});
-					})			
+							 	status_code :3022,
+				 				message :"username existed"
+								} 
+							});
+					}
+					else
+					{
+						m.player.update(
+						{
+							username:username.toLowerCase(),
+							password:password,
+							is_guest:0
+						},
+						{
+							where:{
+								id:player_id
+							}
+						}).then(function()
+						{
+							return res.json({
+								 error: {
+							 		status_code :0,
+				 					message :"updated successfully"
+									 },
+								data: {
+							 		avatar_id:player_data.avatar_id,
+								 	player_id:player_data.id,
+								 	access_token:player_data.access_token
+								 }  
+							});
+						})
+					}
+
 				});
 		}
 		
 		else if(req.body.method==3)
 		{
-			var username = req.body.username.toLowerCase();
+			
 			if(_.isUndefined(ip_address))
 			{
 				return res.json({
@@ -215,36 +239,9 @@ exports.create_player = create_player ;
 							} 
 					})
 			}
-			if(_.isUndefined(username)|| username==null)
-			{
-				return res.json({
-					 error: {
-			 			status_code : 1022,
-			 			message :" username cannot be blank"
-							} 
-					})
-			}
-			m.player.findOne({
-				where:{
-					username:username
-					}
-			}).then(function(data)
-			{
-				if(data)
-				{
-					return res.json({
-						 error: {
-						 	status_code :3022,
-			 				message :"username existed"
-							} 
-						});
-				}
-				else
-				{
 					
 					m.player.create({
 						avatar_id:1,
-						username: username.toLowerCase(),
 						password:"-",
 						status:"online",
 						country:country,
@@ -258,6 +255,7 @@ exports.create_player = create_player ;
 						create_bot(player.id);
 						access_token =random_generate_access_token(player.id);
 						m.player.update({
+							username:"guest"+player.id,
 							access_token:access_token
 						},
 						{
@@ -281,8 +279,8 @@ exports.create_player = create_player ;
 								 }
 						});	
 					});						
-				}
-			});
+				
+			
 		
 		}
 		else
@@ -421,6 +419,17 @@ exports.create_player = create_player ;
 
 		else if(method==2)
 		{
+			var username = req.body.username;
+			if(_.isUndefined(username))
+			{
+				return res.json({
+					 error: {
+			 			status_code : 1022,
+			 			message :" username cannot be blank"
+							} 
+					})
+			}
+
 			if(_.isUndefined(password))
 			{
 				return res.json({
@@ -437,36 +446,52 @@ exports.create_player = create_player ;
 					}
 			}).then(function(player_data)
 			{
-				m.player.update(
-				{
-					password:password,
-					is_guest:0
-				},
-				{
-					where:{
-						id:player_id
-						}
-				}).then(function()
+
+				if(player_data)
 				{
 					return res.json({
 						 error: {
-					 		status_code :0,
-		 					message :"updated successfully"
-							 },
-						data: {
-					 		avatar_id:player_data.avatar_id,
-						 	player_id:player_data.id,
-						 	access_token:player_data.access_token
-						 }  
-					});
-				})			
+						 	status_code :3022,
+			 				message :"username existed"
+							} 
+						});
+				}
+				else
+				{
+					m.player.update(
+						{
+							username:username.toLowerCase(),
+							password:password,
+							is_guest:0
+						},
+						{
+							where:{
+								id:player_id
+								}
+						}).then(function()
+						{
+							return res.json({
+								 error: {
+							 		status_code :0,
+				 					message :"updated successfully"
+									 },
+								data: {
+							 		avatar_id:player_data.avatar_id,
+								 	player_id:player_data.id,
+								 	access_token:player_data.access_token
+								 }  
+							});
+						})	
+
+				}
+					
 			});
 		}
 	
 
 		else if(method==3)
 		{
-			var username = req.body.username.toLowerCase();
+
 			if(_.isUndefined(ip_address))
 			{
 				return res.json({
@@ -485,39 +510,9 @@ exports.create_player = create_player ;
 			 			message : "country cannot be blank"
 							} 
 					})
-			}
-			if(_.isUndefined(username))
-			{
-				return res.json({
-					 error: {
-			 			status_code : 1022,
-			 			message :" username cannot be blank"
-							} 
-					})
-			}
-
-			m.player.findOne({
-				where:{
-					username:username
-				}
-			}).then(function(data)
-			{
-				if(data)
-				{
-					return res.json({
-						 error: {
-						 	status_code :3022,
-			 				message :"username existed"
-								 } 
-
-					});
-				}
-				else
-				{ 
-					
+			} 
 					m.player.create({
 						avatar_id:1,
-						username: username.toLowerCase(),
 						password:" ",
 						status:"online",
 						country:country,
@@ -532,6 +527,7 @@ exports.create_player = create_player ;
 						create_bot(player.id);
 						access_token =random_generate_access_token(player.id);
 						m.player.update({
+							username:"guest"+player.id,
 							access_token:access_token
 						},
 						{
@@ -557,10 +553,10 @@ exports.create_player = create_player ;
 						});		
 					});					
 							
-				}
-			});
+				
+			
 		}
-			else
+		else
 		{
 			return res.json({
 				error:{

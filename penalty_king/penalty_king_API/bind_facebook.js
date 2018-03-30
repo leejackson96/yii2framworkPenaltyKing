@@ -31,16 +31,36 @@ exports.bind_facebook = bind_facebook ;
  			id:player_id
  		}
  	}).then(function(player_data){
+ 		if(player_data.facebook_id!=null)
+ 		{
+ 			return res.json({
+	 				error:{
+	 					status_code:3017,
+	 					message:"this player has already binded facebook"
+	 				}
+	 			})
+ 		}
  		if(player_data)
  		{	
  			m.player.update({
  				facebook_id:facebook_id,
- 				is_guest=0
+ 				is_guest:0
  			},
  			{
  				where:{
  					id:player_id
  				}
+ 			}).then(function(){
+	 				return res.json({
+	 				error:{
+	 					status_code:0,
+	 					message:"successfully bind with facebook"
+	 				},
+	 				data:{
+	 					id:player_data.id,
+	 					facebook_id:facebook_id
+	 				}
+	 			})
  			})
  		}
  		else
